@@ -38,13 +38,13 @@ app.get("/api/notes", (req, res) => {
 
 // setup a post request so that a user can create a new note
 app.post("/api/notes", (req, res) => {
-const { title, text } = req.body;
+    const { title, text } = req.body;
 
- if (title && text) {
-    const newNote = {
-      title,
-      text,
-     };
+    if (title && text) {
+     const newNote = {
+       title,
+       text,
+      };
 
      fs.readFile("./db/db.json", 'utf8', (err, data) => {
         if (err) {
@@ -52,22 +52,29 @@ const { title, text } = req.body;
         } else {
         
             console.log(data);
-            const parsedNote = JSON.parse(data);
+            const parsedNote = JSON.parse(data); 
             
-            
-            notesDB.push(newNote);
-        }
-     });
+            parsedNote.push(newNote);
+            // notesDB.push(newNote)
+        
+   
+            fs.writeFile(
+                "./db/db.json", JSON.stringify(parsedNote), 
+                (err) => 
+                  err ? console.error(err) : console.log("note added")  
+                );
+            };
+        });
+    
+        const response = {
+            status: "success",
+            body: newNote,
+        };
 
-     fs.writeFile(
-        "./db/db.json", 
-        JSON.stringify(newNote), 
-        (err) => {
-            err 
-            ? console.error(err) 
-            : console.log("note added")
-     });
-    };  
+        res.status(201).json(response)
+        } else { 
+        res.status(500).json("error");
+    }
 });
 
 app.listen(PORT, () => {
