@@ -4,7 +4,7 @@ const PORT = 3000;
 
 //import relavent files needed
 const path = require("path");
-const notesDB = require("./db/db.json")
+// const notesDB = require("./db/db.json")
 const fs = require("fs"); 
 
 // setup and import middleware
@@ -17,14 +17,14 @@ app.use(express.static('public'));
 // setup a route to get homepage
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, "/public/index.html"));
-
-})
+});
 
 // setup a route to get notes page
 app.get("/notes", (req, res) => {
     res.sendFile(path.join(__dirname, "/public/notes.html"));
 });
 
+// get previously written notes
 app.get("/api/notes", (req, res) => {
     res.sendFile(path.join(__dirname, "/db/db.json"));
 
@@ -34,9 +34,13 @@ app.get("/api/notes", (req, res) => {
         } else {
             console.log(data);
             JSON.parse(data);
-        }
-    })
-})
+        };
+    });
+});
+
+// app.post("/api/notes", (req, res) => {
+
+// })
 
 // setup a post request so that a user can create a new note
 app.post("/api/notes", (req, res) => {
@@ -47,7 +51,7 @@ app.post("/api/notes", (req, res) => {
        title,
        text,
       };
-
+    //  readfile first because we have to push the new note to parsed note
      fs.readFile("./db/db.json", 'utf8', (err, data) => {
         if (err) {
             console.error(err);
@@ -55,15 +59,12 @@ app.post("/api/notes", (req, res) => {
         
             console.log(data);
             const parsedNote = JSON.parse(data); 
-            
             parsedNote.push(newNote);
-            // notesDB.push(newNote)
-        
-   
+            
             fs.writeFile(
                 "./db/db.json", JSON.stringify(parsedNote), 
                 (err) => 
-                  err ? console.error(err) : console.log("note added")  
+                err ? console.error(err) : console.log("note added")  
                 );
             };
         });
