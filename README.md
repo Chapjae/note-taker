@@ -22,9 +22,9 @@ Once the note is saved, the user will see the note populate on the bottom of the
 ![Fire Note](./public/assets/images/firenote.png)<br>
 
 ## Links
-[Github Repo](https://github.com/Chapjae/svg-logomaker)
-[Heroku Deployment](https://secure-springs-65032-2df5e9debe1e.herokuapp.com/)
-[LinkedIn](https://www.linkedin.com/in/jay-liu-3208a3bb/)
+[Github Repo](https://github.com/Chapjae/svg-logomaker)<br>
+[Heroku Deployment](https://secure-springs-65032-2df5e9debe1e.herokuapp.com/)<br>
+[LinkedIn](https://www.linkedin.com/in/jay-liu-3208a3bb/)<br>
 
 ## Technologies Used
 HTML <br>
@@ -32,3 +32,4 @@ Javascript <br>
 CSS <br>
 Node.js <br>
 express.js<br>
+uuid<br>
