@@ -4,8 +4,8 @@ const PORT = process.env.PORT || 3000;
 
 //import relavent files needed
 const path = require("path");
-// const notesDB = require("./db/db.json")
-const fs = require("fs"); 
+const fs = require("fs");
+const uuid = require("uuid"); 
 
 // setup and import middleware
 app.use(express.json());
@@ -38,19 +38,18 @@ app.get("/api/notes", (req, res) => {
     });
 });
 
-// app.post("/api/notes", (req, res) => {
-
-// })
-
 // setup a post request so that a user can create a new note
 app.post("/api/notes", (req, res) => {
-    const { title, text } = req.body;
+    const { title, text, id } = req.body;
 
     if (title && text) {
      const newNote = {
        title,
        text,
+       id: uuid.v4()
       };
+
+
     //  readfile first because we have to push the new note to parsed note
      fs.readFile("./db/db.json", 'utf8', (err, data) => {
         if (err) {
@@ -72,6 +71,7 @@ app.post("/api/notes", (req, res) => {
         const response = {
             status: "success",
             body: newNote,
+
         };
 
         res.status(201).json(response)
@@ -80,6 +80,7 @@ app.post("/api/notes", (req, res) => {
     }
 });
 
+// if the user enters a route that doesn't exist, send them to the homepage
 app.get("*", (req, res) =>{
     res.sendFile(path.join(__dirname, "/public/index.html"));
 })
